@@ -186,6 +186,23 @@ const keys=document.getElementById("keys");
   };
   keys.appendChild(b);
 });
+  
+let touchStartY = 0;
+
+const phoneScreen = document.querySelector(".phone");
+
+phoneScreen.addEventListener("touchstart", function(e) {
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+phoneScreen.addEventListener("touchend", function(e) {
+  const touchEndY = e.changedTouches[0].screenY;
+
+  if (touchStartY - touchEndY > 50) {
+    unlock();
+  }
+}, { passive: true });
+
 </script>
 </body>
 </html>
