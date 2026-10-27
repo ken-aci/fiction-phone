@@ -355,6 +355,31 @@ html, body {
   cursor: pointer;
 }
 
+/* Smooth lock screen transition */
+.line-stack {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.line-stack.is-hiding {
+  opacity: 0;
+  transform: translateY(-18px);
+  pointer-events: none;
+}
+
+.passcode {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.passcode.is-entering {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.passcode.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 <body>
@@ -450,11 +475,22 @@ html, body {
 <script>
   
 
+
 function cancelPasscode() {
-  document.getElementById("passcode").style.display = "none";
-  document.getElementById("lineStack").style.display = "";
-  document.getElementById("lineStack").classList.remove("expanded");
-  document.querySelector(".lock-actions").style.display = "flex";
+  const passcode = document.getElementById("passcode");
+  const stack = document.getElementById("lineStack");
+  const actions = document.querySelector(".lock-actions");
+
+  passcode.style.display = "none";
+  passcode.classList.remove("is-entering", "is-visible");
+
+  stack.style.display = "";
+  stack.classList.remove("is-hiding", "expanded");
+
+  actions.style.display = "flex";
+  actions.style.opacity = "1";
+  actions.style.pointerEvents = "auto";
+
   pin = "";
   document.getElementById("dots").textContent = "○○○○";
 }
@@ -468,13 +504,35 @@ document.getElementById("date").textContent =
   now.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
 
 let pin = "";
-function unlock(){
-  
-document.getElementById("passcode").style.display="block";
-document.getElementById("lineStack").style.display = "none";
-document.querySelector(".lock-actions").style.display = "none";
 
+function unlock() {
+  const passcode = document.getElementById("passcode");
+  const stack = document.getElementById("lineStack");
+  const actions = document.querySelector(".lock-actions");
+
+  if (passcode.style.display === "flex") return;
+
+  stack.classList.add("is-hiding");
+  actions.style.opacity = "0";
+  actions.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    stack.style.display = "none";
+    actions.style.display = "none";
+
+    passcode.classList.remove("is-visible");
+    passcode.classList.add("is-entering");
+    passcode.style.display = "flex";
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        passcode.classList.remove("is-entering");
+        passcode.classList.add("is-visible");
+      });
+    });
+  }, 350);
 }
+
   
 function handleLineTap(event) {
   event.stopPropagation();
