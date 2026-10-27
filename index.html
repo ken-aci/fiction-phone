@@ -318,6 +318,36 @@ html, body {
   z-index: 10;
 }
 
+/* Lock screen flashlight and camera */
+.lock-actions {
+  position: absolute;
+  bottom: 65px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.lock-action {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(50,50,50,0.35);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -384,6 +414,19 @@ html, body {
     </div>
   </div>
 
+</div>
+
+<div class="lock-actions">
+  <button class="lock-action" type="button" aria-label="Flashlight">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="25" height="25">
+      <path d="M7 2h10v5l-3.5 4v9a2.5 2.5 0 0 1-5 0v-9L7 7V2zm2 2v2h6V4H9z"/>
+    </svg>
+  </button>
+  <button class="lock-action" type="button" aria-label="Camera">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="27" height="27">
+      <path d="M9 3 7.5 5H4a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3h-3.5L15 3H9zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+    </svg>
+  </button>
 </div>
 
   <div class="bottom" onclick="unlock()">
