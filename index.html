@@ -251,6 +251,16 @@ body {
   font-weight: bold;
 }
 
+/* Prevent page scrolling when swiping the phone */
+html, body {
+  overscroll-behavior: none;
+}
+
+.phone {
+  touch-action: pan-x;
+  overscroll-behavior: contain;
+}
+
 </style>
 </head>
 <body>
