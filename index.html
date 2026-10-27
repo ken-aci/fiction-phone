@@ -376,8 +376,18 @@ html, body {
     <div class="dots" id="dots">○○○○</div>
     <div class="keypad" id="keys"></div>
   </div>
+  <button class="cancel-btn" onclick="cancelPasscode()">Cancel</button>
+
 </div>
 <script>
+  
+function cancelPasscode() {
+  document.getElementById("passcode").style.display = "none";
+  document.getElementById("lineStack").classList.remove("expanded");
+  pin = "";
+  document.getElementById("dots").textContent = "○○○○";
+}
+
 const now = new Date();
 document.getElementById("time").textContent =
   now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
