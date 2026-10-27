@@ -2,24 +2,175 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fiction Phone</title>
-  <style>
-    body {
-      background: #10131f;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 100px;
-    }
-    h1 { font-size: 32px; }
-    p { color: #bbbbbb; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Ken's iPhone</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #101114;
+  color: white;
+}
+.phone {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: #222;
+}
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  background: url("IMG_6568.jpeg") center/cover no-repeat;
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,rgba(0,0,0,.35),transparent 45%,rgba(0,0,0,.3));
+}
+.status {
+  position: absolute;
+  top: 18px;
+  width: 100%;
+  padding: 0 28px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+}
+.island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 32px;
+  border-radius: 30px;
+  background: black;
+}
+.clock {
+  position: absolute;
+  top: 14%;
+  width: 100%;
+  text-align: center;
+}
+.date { font-size: 20px; }
+.time {
+  font-size: 86px;
+  font-weight: 200;
+  letter-spacing: -4px;
+}
+.bottom {
+  position: absolute;
+  bottom: 32px;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+}
+.homebar {
+  width: 130px;
+  height: 5px;
+  background: white;
+  border-radius: 8px;
+  margin: 20px auto 0;
+}
+.passcode {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(15,17,21,.93);
+  text-align: center;
+  padding-top: 24vh;
+}
+.dots {
+  font-size: 30px;
+  letter-spacing: 12px;
+  margin: 25px 0;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3,70px);
+  justify-content: center;
+  gap: 15px;
+}
+.keypad button {
+  width: 70px;
+  height: 70px;
+  border: 0;
+  border-radius: 50%;
+  background: #44474d;
+  color: white;
+  font-size: 28px;
+}
+</style>
 </head>
 <body>
-  <h1>📱 Fiction Phone</h1>
-  <p>Welcome to my world ♡</p>
-  <p>โทรศัพท์ของตัวละคร</p>
+<div class="phone">
+  <div class="wallpaper"></div>
+  <div class="shade"></div>
+  <div class="island"></div>
+  <div class="status">
+    <span id="smalltime">9:41</span>
+    <span>●●● ▰  ▣</span>
+  </div>
+  <div class="clock" onclick="unlock()">
+    <div class="date" id="date"></div>
+    <div class="time" id="time"></div>
+  </div>
+  <div class="bottom" onclick="unlock()">
+    Swipe up to unlock
+    <div class="homebar"></div>
+  </div>
+  <div class="passcode" id="passcode">
+    <div>Enter Passcode</div>
+    <div class="dots" id="dots">○○○○</div>
+    <div class="keypad" id="keys"></div>
+  </div>
+</div>
+<script>
+const now = new Date();
+document.getElementById("time").textContent =
+  now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+document.getElementById("smalltime").textContent =
+  document.getElementById("time").textContent;
+document.getElementById("date").textContent =
+  now.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+
+let pin = "";
+function unlock(){
+  document.getElementById("passcode").style.display="block";
+}
+function press(n){
+  pin += n;
+  document.getElementById("dots").textContent =
+    "●".repeat(pin.length)+"○".repeat(4-pin.length);
+  if(pin.length===4){
+    if(pin==="1234"){
+      document.querySelector(".phone").innerHTML =
+        '<div style="padding:90px 20px;text-align:center"><h1>Ken\'s iPhone</h1><p>Unlocked ✓</p></div>';
+    } else {
+      setTimeout(()=>{
+        pin="";
+        document.getElementById("dots").textContent="○○○○";
+      },500);
+    }
+  }
+}
+const keys=document.getElementById("keys");
+[1,2,3,4,5,6,7,8,9,"",0,"⌫"].forEach(n=>{
+  const b=document.createElement("button");
+  b.textContent=n;
+  b.onclick=()=>{
+    if(n==="⌫"){
+      pin=pin.slice(0,-1);
+      document.getElementById("dots").textContent=
+        "●".repeat(pin.length)+"○".repeat(4-pin.length);
+    } else if(n!=="") press(String(n));
+  };
+  keys.appendChild(b);
+});
+</script>
 </body>
 </html>
