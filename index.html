@@ -437,15 +437,17 @@ html, body {
     <div>Enter Passcode</div>
     <div class="dots" id="dots">○○○○</div>
     <div class="keypad" id="keys"></div>
-  </div>
   <button class="cancel-btn" onclick="cancelPasscode()">Cancel</button>
-
+</div>
 </div>
 <script>
   
+
 function cancelPasscode() {
   document.getElementById("passcode").style.display = "none";
+  document.getElementById("lineStack").style.display = "";
   document.getElementById("lineStack").classList.remove("expanded");
+  document.querySelector(".lock-actions").style.display = "flex";
   pin = "";
   document.getElementById("dots").textContent = "○○○○";
 }
@@ -463,6 +465,7 @@ function unlock(){
   
 document.getElementById("passcode").style.display="block";
 document.getElementById("lineStack").style.display = "none";
+document.querySelector(".lock-actions").style.display = "none";
 
 }
   
