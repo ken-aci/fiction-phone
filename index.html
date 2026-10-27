@@ -157,6 +157,100 @@ body {
 #dots {
   color: white !important;
 }
+  
+/* LINE notifications */
+.line-stack {
+  position: absolute;
+  top: 245px;
+  left: 5%;
+  width: 90%;
+  z-index: 15;
+  cursor: pointer;
+}
+
+.line-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  min-height: 62px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: rgba(210, 215, 225, 0.35);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  color: white;
+  transition: margin 0.35s ease, transform 0.35s ease;
+}
+
+.line-card + .line-card {
+  margin-top: -49px;
+}
+
+.line-card:nth-child(2) {
+  transform: scale(0.96);
+}
+
+.line-card:nth-child(3) {
+  transform: scale(0.92);
+}
+
+.line-stack.expanded .line-card {
+  margin-top: 8px;
+  transform: scale(1);
+}
+
+.line-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.line-text {
+  min-width: 0;
+  flex: 1;
+  font-size: 13px;
+}
+
+.line-name {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.line-message {
+  font-size: 12px;
+}
+
+.line-card:not(:first-child) .line-text {
+  opacity: 0;
+}
+
+.line-stack.expanded .line-text {
+  opacity: 1;
+}
+
+.line-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.line-logo {
+  position: absolute;
+  right: -3px;
+  bottom: 0;
+  background: #06c755;
+  color: white;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  font-size: 6px;
+  font-weight: bold;
+}
+
 </style>
 </head>
 <body>
@@ -187,6 +281,44 @@ body {
     <div class="date" id="date"></div>
     <div class="time" id="time"></div>
   </div>
+  
+<div class="line-stack" id="lineStack" onclick="handleLineTap(event)">
+
+  <div class="line-card">
+    <div class="line-avatar-wrap">
+      <img class="line-avatar" src="IMG_6600.jpeg">
+      <span class="line-logo">LINE</span>
+    </div>
+    <div class="line-text">
+      <div class="line-name">สารวัตรเจมส์🤍</div>
+      <div class="line-message">คิดถึงเคนครับ🥺</div>
+    </div>
+  </div>
+
+  <div class="line-card">
+    <div class="line-avatar-wrap">
+      <img class="line-avatar" src="IMG_6600.jpeg">
+      <span class="line-logo">LINE</span>
+    </div>
+    <div class="line-text">
+      <div class="line-name">สารวัตรเจมส์🤍</div>
+      <div class="line-message">วันนี้เหนื่อยไหมครับ</div>
+    </div>
+  </div>
+
+  <div class="line-card">
+    <div class="line-avatar-wrap">
+      <img class="line-avatar" src="IMG_6600.jpeg">
+      <span class="line-logo">LINE</span>
+    </div>
+    <div class="line-text">
+      <div class="line-name">สารวัตรเจมส์🤍</div>
+      <div class="line-message">เลิกงานแล้วผมไปรับนะ</div>
+    </div>
+  </div>
+
+</div>
+
   <div class="bottom" onclick="unlock()">
     Swipe up to unlock
     <div class="homebar"></div>
@@ -210,6 +342,19 @@ let pin = "";
 function unlock(){
   document.getElementById("passcode").style.display="block";
 }
+  
+function handleLineTap(event) {
+  event.stopPropagation();
+
+  const stack = document.getElementById("lineStack");
+
+  if (!stack.classList.contains("expanded")) {
+    stack.classList.add("expanded");
+  } else {
+    unlock();
+  }
+}
+
 function press(n){
   pin += n;
   document.getElementById("dots").textContent =
