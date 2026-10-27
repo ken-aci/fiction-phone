@@ -144,6 +144,13 @@ body {
   color: white;
   font-size: 28px;
 }
+@keyframes wrongShake {
+
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
+}
+  
 </style>
 </head>
 <body>
@@ -206,10 +213,17 @@ function press(n){
       document.querySelector(".phone").innerHTML =
         '<div style="padding:90px 20px;text-align:center"><h1>Ken\'s iPhone</h1><p>Unlocked ✓</p></div>';
     } else {
-      setTimeout(()=>{
-        pin="";
-        document.getElementById("dots").textContent="○○○○";
-      },500);
+      const dots = document.getElementById("dots");
+
+dots.style.animation = "none";
+void dots.offsetWidth;
+dots.style.animation = "wrongShake 0.4s ease";
+
+setTimeout(() => {
+    pin = "";
+    dots.textContent = "○○○○";
+    dots.style.animation = "";
+}, 600);
     }
   }
 }
