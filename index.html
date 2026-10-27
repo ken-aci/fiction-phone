@@ -200,6 +200,14 @@ body {
   transform: scale(1);
 }
 
+.line-stack.expanded .line-card:nth-child(2) {
+  transition-delay: 0.12s;
+}
+
+.line-stack.expanded .line-card:nth-child(3) {
+  transition-delay: 0.28s;
+}
+
 .line-avatar {
   width: 44px;
   height: 44px;
@@ -224,7 +232,7 @@ body {
 }
 
 .line-card:not(:first-child) .line-text {
-  opacity: 0;
+  opacity: 1;
 }
 
 .line-stack.expanded .line-text {
@@ -350,7 +358,10 @@ document.getElementById("date").textContent =
 
 let pin = "";
 function unlock(){
-  document.getElementById("passcode").style.display="block";
+  
+document.getElementById("passcode").style.display="block";
+document.getElementById("lineStack").style.display = "none";
+
 }
   
 function handleLineTap(event) {
