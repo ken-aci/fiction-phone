@@ -507,8 +507,15 @@ function cancelPasscode() {
       requestAnimationFrame(() => {
         stack.classList.remove("is-hiding");
         requestAnimationFrame(() => {
+stack.style.opacity = "0";
+stack.style.transition = "opacity 0.5s ease";
 
+requestAnimationFrame(() => {
+  stack.style.opacity = "1";
+});
+  setTimeout(() => {
   stack.style.transition = "";
+}, 550);
 
 });
         actions.style.opacity = "1";
