@@ -566,32 +566,50 @@ html, body {
 
 
 
+
 function cancelPasscode() {
   const passcode = document.getElementById("passcode");
   const stack = document.getElementById("lineStack");
+  const clock = document.querySelector(".clock");
   const actions = document.querySelector(".lock-actions");
 
-  // เริ่มเฟดหน้ารหัสออก
+  // ให้หน้ารหัสค่อย ๆ จางออก
   passcode.style.pointerEvents = "none";
   passcode.classList.remove("is-visible");
   passcode.classList.add("is-entering");
 
-  // รอให้แอนิเมชันจบก่อนซ่อนหน้ารหัส
   setTimeout(() => {
     passcode.style.display = "none";
     passcode.classList.remove("is-entering");
+
+    // เตรียมนาฬิกาและข้อความในตำแหน่งเริ่มต้น
+    clock.style.transition = "none";
+    clock.style.display = "";
+    clock.style.transform = "translateY(-40px)";
+    clock.style.opacity = "0";
+
     stack.style.transition = "none";
     stack.style.display = "";
     stack.classList.remove("expanded");
     stack.classList.add("is-hiding");
+    stack.style.transform = "translateY(-40px)";
+    stack.style.opacity = "0";
+
     actions.style.display = "flex";
     actions.style.opacity = "0";
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        clock.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+        stack.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+
+        clock.style.transform = "translateY(0)";
+        clock.style.opacity = "1";
+
         stack.classList.remove("is-hiding");
+        stack.style.transform = "translateY(0)";
         stack.style.opacity = "1";
-stack.style.transition = "";
+
         actions.style.opacity = "1";
         actions.style.pointerEvents = "auto";
       });
@@ -603,6 +621,7 @@ stack.style.transition = "";
   }, 350);
 }
 
+
 const now = new Date();
 document.getElementById("time").textContent =
   now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
@@ -613,18 +632,31 @@ document.getElementById("date").textContent =
 
 let pin = "";
 
+
 function unlock() {
   const passcode = document.getElementById("passcode");
   const stack = document.getElementById("lineStack");
+  const clock = document.querySelector(".clock");
   const actions = document.querySelector(".lock-actions");
 
   if (passcode.style.display === "flex") return;
 
-  stack.classList.add("is-hiding");
+  // ให้วันที่ เวลา และข้อความเจมส์เลื่อนขึ้นพร้อมกัน
+  clock.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+  stack.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+
+  clock.style.transform = "translateY(-80px)";
+  clock.style.opacity = "0";
+
+  stack.style.transform = "translateY(-80px)";
+  stack.style.opacity = "0";
+  stack.style.pointerEvents = "none";
+
   actions.style.opacity = "0";
   actions.style.pointerEvents = "none";
 
   setTimeout(() => {
+    clock.style.display = "none";
     stack.style.display = "none";
     actions.style.display = "none";
 
@@ -638,8 +670,9 @@ function unlock() {
         passcode.classList.add("is-visible");
       });
     });
-  }, 350);
+  }, 400);
 }
+
 
   
 function handleLineTap(event) {
