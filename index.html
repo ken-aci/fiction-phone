@@ -611,7 +611,8 @@ html, body {
 
 <!-- Notification Center -->
 <div class="ken-notifications" id="kenNotifications">
-  <div class="ken-notification">
+  <div class="ken-notification" onclick="event.stopPropagation(); unlock();">
+
     
 <div class="ken-app-icon calendar-icon">
   <span class="calendar-day">WED</span>
@@ -624,7 +625,9 @@ html, body {
     </div>
   </div>
 
-  <div class="ken-notification">
+  
+<div class="ken-notification" onclick="event.stopPropagation(); unlock();">
+
     
 <div class="ken-app-icon missed-icon">
   <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
