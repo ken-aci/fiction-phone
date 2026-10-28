@@ -466,6 +466,35 @@ html, body {
   font-size: 13px;
   font-weight: 700;
 }
+  
+/* Small notifications below James */
+.ken-notifications {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 90%;
+  margin: 8px auto 0;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  z-index: 4;
+}
+
+.ken-notification {
+  flex-shrink: 0;
+  padding: 8px 10px;
+  margin-bottom: 0;
+  gap: 9px;
+  border-radius: 15px;
+}
+
+.ken-app-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+}
+
 </style>
 </head>
 <body>
@@ -534,6 +563,25 @@ html, body {
 
 </div>
 
+<!-- Notification Center -->
+<div class="ken-notifications" id="kenNotifications">
+  <div class="ken-notification">
+    <div class="ken-app-icon calendar-icon">28</div>
+    <div class="ken-notification-text">
+      <strong>ปฏิทิน</strong>
+      <span>ประชุมสรุปคดี เวลา 09:00 น.</span>
+    </div>
+  </div>
+
+  <div class="ken-notification">
+    <div class="ken-app-icon missed-icon">☎</div>
+    <div class="ken-notification-text">
+      <strong>โทรศัพท์</strong>
+      <span>สายที่ไม่ได้รับจาก หมอจิ</span>
+    </div>
+  </div>
+</div>
+
 <div class="lock-actions">
   <button class="lock-action" type="button" aria-label="Flashlight">
     <svg viewBox="0 0 24 24" fill="currentColor" width="25" height="25">
@@ -570,6 +618,8 @@ function cancelPasscode() {
   const stack = document.getElementById("lineStack");
   const clock = document.querySelector(".clock");
   const actions = document.querySelector(".lock-actions");
+  const notifications = document.getElementById("kenNotifications");
+
 
   passcode.style.pointerEvents = "none";
   passcode.classList.remove("is-visible");
@@ -582,6 +632,18 @@ function cancelPasscode() {
     // คืนกล่องเจมส์โดยไม่เรียกแอนิเมชันซ่อนซ้ำ
     stack.style.transition = "none";
     stack.style.display = "";
+    
+if (notifications) {
+  notifications.style.transition = "none";
+  notifications.style.display = "flex";
+  notifications.style.transform = "translateY(0)";
+  notifications.style.opacity = "1";
+  notifications.style.pointerEvents = "auto";
+  requestAnimationFrame(() => {
+    updateNotificationPosition();
+  });
+}
+
     stack.classList.remove("expanded", "is-hiding");
     stack.style.transform = "translateY(0)";
     stack.style.opacity = "1";
@@ -626,7 +688,7 @@ function unlock() {
   const stack = document.getElementById("lineStack");
   const clock = document.querySelector(".clock");
   const actions = document.querySelector(".lock-actions");
-
+  const notifications = document.getElementById("kenNotifications");
   if (passcode.style.display === "flex") return;
 
   // ให้วันที่ เวลา และข้อความเจมส์เลื่อนขึ้นพร้อมกัน
@@ -638,6 +700,14 @@ function unlock() {
 
   stack.style.transform = "translateY(-80px)";
   stack.style.opacity = "0";
+  
+if (notifications) {
+  notifications.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+  notifications.style.transform = "translateY(-80px)";
+  notifications.style.opacity = "0";
+  notifications.style.pointerEvents = "none";
+}
+
   stack.style.pointerEvents = "none";
 
   actions.style.opacity = "0";
@@ -646,6 +716,9 @@ function unlock() {
   setTimeout(() => {
     clock.style.display = "none";
     stack.style.display = "none";
+    
+if (notifications) notifications.style.display = "none";
+
     actions.style.display = "none";
 
     passcode.classList.remove("is-visible");
@@ -663,6 +736,7 @@ function unlock() {
 
 
   
+
 function handleLineTap(event) {
   event.stopPropagation();
 
@@ -670,9 +744,44 @@ function handleLineTap(event) {
 
   if (!stack.classList.contains("expanded")) {
     stack.classList.add("expanded");
+
+    requestAnimationFrame(() => {
+      updateNotificationPosition();
+    });
+
+    setTimeout(() => {
+      updateNotificationPosition();
+    }, 500);
+
   } else {
     unlock();
   }
+}
+
+
+function updateNotificationPosition() {
+  const stack = document.getElementById("lineStack");
+  const notifications = document.getElementById("kenNotifications");
+  const phone = document.querySelector(".phone");
+  const actions = document.querySelector(".lock-actions");
+
+  if (!stack || !notifications || !phone || !actions) return;
+
+  const phoneRect = phone.getBoundingClientRect();
+  const stackRect = stack.getBoundingClientRect();
+  const actionsRect = actions.getBoundingClientRect();
+
+  const top = stackRect.bottom - phoneRect.top + 10;
+  const available = actionsRect.top - stackRect.bottom - 24;
+
+  notifications.style.position = "absolute";
+  notifications.style.top = top + "px";
+  notifications.style.left = "5%";
+  notifications.style.width = "90%";
+  notifications.style.margin = "0";
+  notifications.style.maxHeight = Math.max(0, Math.min(120, available)) + "px";
+  notifications.style.overflowY = "auto";
+  notifications.style.transition = "top 0.3s ease";
 }
 
 function press(n){
