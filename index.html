@@ -478,23 +478,41 @@ html, body {
   
 
 
+
 function cancelPasscode() {
   const passcode = document.getElementById("passcode");
   const stack = document.getElementById("lineStack");
   const actions = document.querySelector(".lock-actions");
 
-  passcode.style.display = "none";
-  passcode.classList.remove("is-entering", "is-visible");
+  // เริ่มเฟดหน้ารหัสออก
+  passcode.style.pointerEvents = "none";
+  passcode.classList.remove("is-visible");
+  passcode.classList.add("is-entering");
 
-  stack.style.display = "";
-  stack.classList.remove("is-hiding", "expanded");
+  // รอให้แอนิเมชันจบก่อนซ่อนหน้ารหัส
+  setTimeout(() => {
+    passcode.style.display = "none";
+    passcode.classList.remove("is-entering");
 
-  actions.style.display = "flex";
-  actions.style.opacity = "1";
-  actions.style.pointerEvents = "auto";
+    stack.style.display = "";
+    stack.classList.add("is-hiding");
+    stack.classList.remove("expanded");
 
-  pin = "";
-  document.getElementById("dots").textContent = "○○○○";
+    actions.style.display = "flex";
+    actions.style.opacity = "0";
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        stack.classList.remove("is-hiding");
+        actions.style.opacity = "1";
+        actions.style.pointerEvents = "auto";
+      });
+    });
+
+    passcode.style.pointerEvents = "auto";
+    pin = "";
+    document.getElementById("dots").textContent = "○○○○";
+  }, 350);
 }
 
 const now = new Date();
