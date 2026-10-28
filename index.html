@@ -493,17 +493,17 @@ function cancelPasscode() {
   setTimeout(() => {
     passcode.style.display = "none";
     passcode.classList.remove("is-entering");
-
+    stack.style.transition = "none";
     stack.style.display = "";
-    stack.classList.add("is-hiding");
     stack.classList.remove("expanded");
-
+    stack.classList.add("is-hiding");
     actions.style.display = "flex";
     actions.style.opacity = "0";
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         stack.classList.remove("is-hiding");
+        stack.style.transition = "";
         actions.style.opacity = "1";
         actions.style.pointerEvents = "auto";
       });
