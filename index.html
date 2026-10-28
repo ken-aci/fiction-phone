@@ -506,7 +506,11 @@ function cancelPasscode() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         stack.classList.remove("is-hiding");
-        stack.style.transition = "";
+        requestAnimationFrame(() => {
+
+  stack.style.transition = "";
+
+});
         actions.style.opacity = "1";
         actions.style.pointerEvents = "auto";
       });
