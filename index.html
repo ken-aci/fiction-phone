@@ -469,17 +469,19 @@ html, body {
   
 /* Small notifications below James */
 .ken-notifications {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 90%;
-  margin: 8px auto 0;
-  max-height: 120px;
-  overflow-y: auto;
+  left: 5%;
+  margin: 0;
+  max-height: none;
+  overflow: visible;
   scrollbar-width: none;
   z-index: 4;
 }
+
 
 .ken-notification {
   flex-shrink: 0;
@@ -737,6 +739,7 @@ if (notifications) notifications.style.display = "none";
 
   
 
+
 function handleLineTap(event) {
   event.stopPropagation();
 
@@ -745,18 +748,23 @@ function handleLineTap(event) {
   if (!stack.classList.contains("expanded")) {
     stack.classList.add("expanded");
 
-    requestAnimationFrame(() => {
-      updateNotificationPosition();
-    });
+    const start = performance.now();
 
-    setTimeout(() => {
+    function followNotifications() {
       updateNotificationPosition();
-    }, 500);
+
+      if (performance.now() - start < 700) {
+        requestAnimationFrame(followNotifications);
+      }
+    }
+
+    requestAnimationFrame(followNotifications);
 
   } else {
     unlock();
   }
 }
+
 
 
 function updateNotificationPosition() {
@@ -779,10 +787,20 @@ function updateNotificationPosition() {
   notifications.style.left = "5%";
   notifications.style.width = "90%";
   notifications.style.margin = "0";
-  notifications.style.maxHeight = Math.max(0, Math.min(120, available)) + "px";
-  notifications.style.overflowY = "auto";
-  notifications.style.transition = "top 0.3s ease";
+  notifications.style.maxHeight = "none";
+
+  
+  notifications.style.overflowY = "visible";
+
+  notifications.style.transition = "none";
+
 }
+
+window.addEventListener("load", () => {
+  requestAnimationFrame(() => {
+    updateNotificationPosition();
+  });
+});
 
 function press(n){
   pin += n;
