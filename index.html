@@ -499,6 +499,48 @@ html, body {
   font-size: 13px;
 }
 
+/* iPhone Calendar Icon */
+.ken-app-icon.calendar-icon {
+  background: #ffffff;
+  color: #161616;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.calendar-day {
+  color: #e34b48;
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 10px;
+}
+
+.calendar-date {
+  color: #161616;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+/* iPhone Phone Icon */
+.ken-app-icon.missed-icon {
+  background: #f0444b;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+}
+
+.ken-app-icon.missed-icon svg {
+  display: block;
+  flex-shrink: 0;
+}
+
 </style>
 </head>
 <body>
@@ -570,7 +612,12 @@ html, body {
 <!-- Notification Center -->
 <div class="ken-notifications" id="kenNotifications">
   <div class="ken-notification">
-    <div class="ken-app-icon calendar-icon">28</div>
+    
+<div class="ken-app-icon calendar-icon">
+  <span class="calendar-day">WED</span>
+  <span class="calendar-date">28</span>
+</div>
+
     <div class="ken-notification-text">
       <strong>ปฏิทิน</strong>
       <span>ประชุมสรุปคดี เวลา 09:00 น.</span>
@@ -578,7 +625,13 @@ html, body {
   </div>
 
   <div class="ken-notification">
-    <div class="ken-app-icon missed-icon">☎</div>
+    
+<div class="ken-app-icon missed-icon">
+  <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
+    <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
+  </svg>
+</div>
+
     <div class="ken-notification-text">
       <strong>โทรศัพท์</strong>
       <span>สายที่ไม่ได้รับจาก หมอจิ</span>
