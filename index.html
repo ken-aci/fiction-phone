@@ -980,6 +980,26 @@ phoneScreen.addEventListener("touchend", function(e) {
     unlock();
   }
 }, { passive: true });
+  function homeAppIcon(name) {
+  const icons = {
+    Calendar: `<div style="background:white;color:#111;width:100%;height:100%;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-size:10px;color:#ed3b35;font-weight:700">SUN</span><span style="font-size:32px;font-weight:400;line-height:1">1</span></div>`,
+
+    Clock: `<div style="background:#171717;width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="85%"><circle cx="32" cy="32" r="26" fill="white"/><circle cx="32" cy="32" r="22" fill="none" stroke="#222" stroke-width="1"/><path d="M32 13V32L43 39" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="32" r="2" fill="#222"/></svg></div>`,
+
+    Photos: `<div style="background:white;width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="80%">${["#f44336","#ff9800","#ffdb36","#60bb50","#30b6cc","#4979df","#9c61c9","#ed65a4"].map((c,i)=>`<ellipse cx="32" cy="20" rx="8" ry="16" fill="${c}" opacity=".85" transform="rotate(${i*45} 32 32)"/>`).join("")}</svg></div>`,
+
+    Camera: `<div style="background:linear-gradient(#e9e9ed,#a9a9b0);width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="78%"><path d="M12 22h9l5-6h13l5 6h8a5 5 0 0 1 5 5v22a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5V27a5 5 0 0 1 5-5" fill="#29292c"/><circle cx="32" cy="37" r="12" fill="#777"/><circle cx="32" cy="37" r="9" fill="#222" stroke="#bbb" stroke-width="2"/><circle cx="49" cy="28" r="2" fill="#ffce47"/></svg></div>`,
+
+    Notes: `<div style="background:linear-gradient(#ffda4e 0 24%,#fff 24%);width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="80%"><path d="M9 25H55M9 34H55M9 43H55M9 52H55" stroke="#ddd" stroke-width="2"/></svg></div>`,
+
+    Files: `<div style="background:white;width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="85%"><path d="M6 20h22l5 6h25v23H6z" fill="#2785ed"/><path d="M6 20h22l5 6H6z" fill="#62b5ff"/></svg></div>`,
+
+    Safari: `<div style="background:white;width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="86%"><circle cx="32" cy="32" r="27" fill="#169cf0"/><circle cx="32" cy="32" r="23" fill="none" stroke="white" stroke-width="1.5"/><path d="M39 24L25 39L30 30Z" fill="white"/><path d="M25 39L39 24L34 34Z" fill="#f34c4c"/></svg></div>`,
+
+    Settings: `<div style="background:linear-gradient(#d5d5d9,#85858c);width:100%;height:100%;border-radius:14px;display:grid;place-items:center"><svg viewBox="0 0 64 64" width="83%"><g fill="#555"><path d="${Array.from({length:12},(_,i)=>{let a=i*Math.PI/6;return `${i===0?"M":"L"}${32+25*Math.cos(a)} ${32+25*Math.sin(a)}`}).join(" ")}Z"/></g><circle cx="32" cy="32" r="18" fill="#bfc0c4"/><circle cx="32" cy="32" r="12" fill="#62636a"/><circle cx="32" cy="32" r="8" fill="#c9c9cd"/></svg></div>`
+  };
+  return icons[name] || "";
+}
 function showHomeScreen() {
   const phone = document.querySelector(".phone");
 
@@ -1017,18 +1037,14 @@ function showHomeScreen() {
         text-align:center;
       ">
         ${[
-          ["31","Calendar","#ffffff","#111111"],
-          ["◷","Clock","#202020","#ffffff"],
-          ["A","App Store","#168bff","#ffffff"],
-          ["▤","Books","#ff9b17","#ffffff"],
-          ["▦","Calculator","#333333","#ffffff"],
-          ["◉","Contacts","#e8e8e8","#555555"],
-          ["▣","FaceTime","#28c94d","#ffffff"],
-          ["◎","Camera","#777777","#ffffff"],
-          ["▤","Notes","#fff5c5","#333333"],
-          ["⚙","Settings","#8b8b8b","#ffffff"],
-          ["✿","Photos","#ffffff","#e55c96"],
-          ["▣","Files","#3478df","#ffffff"]
+    ["31", "Calendar", "#ffffff", "#111111", "https://img.icons8.com/fluency/96/calendar.png"],
+["◷", "Clock", "#202020", "#ffffff", "https://img.icons8.com/fluency/96/clock.png"],
+["✿", "Photos", "#ffffff", "#111111", "https://img.icons8.com/fluency/96/google-photos.png"],
+["◎", "Camera", "#aaaaaa", "#ffffff", "https://img.icons8.com/fluency/96/camera.png"],
+["▤", "Notes", "#fff5c5", "#333333", "https://img.icons8.com/fluency/96/notes.png"],
+["▣", "Files", "#ffffff", "#168bff", "https://img.icons8.com/fluency/96/folder-invoices.png"],
+["◉", "Safari", "#ffffff", "#168bff", "https://img.icons8.com/fluency/96/safari.png"],
+["⚙", "Settings", "#aaaaaa", "#ffffff", "https://img.icons8.com/fluency/96/settings.png"]
         ].map(app => `
           <div>
             <div style="
@@ -1044,7 +1060,7 @@ function showHomeScreen() {
               justify-content:center;
               font-size:29px;
               font-weight:600;
-            ">${app[0]}</div>
+            ">${app[4] ? `<img src="${app[4]}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">` : app[0]}</div>
             <div style="font-size:10px;margin-top:5px;">${app[1]}</div>
           </div>
         `).join("")}
