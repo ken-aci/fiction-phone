@@ -935,8 +935,7 @@ function press(n){
     "●".repeat(pin.length)+"○".repeat(4-pin.length);
   if(pin.length===4){
     if(pin==="1234"){
-      document.querySelector(".phone").innerHTML =
-        '<div style="padding:90px 20px;text-align:center"><h1>Ken\'s iPhone</h1><p>Unlocked ✓</p></div>';
+      showHomeScreen();
     } else {
       const dots = document.getElementById("dots");
 
@@ -981,7 +980,117 @@ phoneScreen.addEventListener("touchend", function(e) {
     unlock();
   }
 }, { passive: true });
+function showHomeScreen() {
+  const phone = document.querySelector(".phone");
 
+  phone.innerHTML = `
+    <div class="ken-home" style="
+      position:absolute;
+      inset:0;
+      z-index:30;
+      background:#03040d url('stars-home.jpg') center/cover no-repeat;
+      color:white;
+      font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+      padding:85px 22px 28px;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+    ">
+
+      <div style="
+        background:rgba(255,255,255,0.14);
+        backdrop-filter:blur(18px);
+        border-radius:22px;
+        padding:18px;
+        margin-bottom:30px;
+        font-size:14px;
+      ">
+        <div style="font-size:12px;opacity:.7;">CALENDAR</div>
+        <div style="font-size:23px;font-weight:600;margin:8px 0;">No Events Today</div>
+        <div style="opacity:.75;">Nothing scheduled</div>
+      </div>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:22px 12px;
+        text-align:center;
+      ">
+        ${[
+          ["31","Calendar","#ffffff","#111111"],
+          ["◷","Clock","#202020","#ffffff"],
+          ["A","App Store","#168bff","#ffffff"],
+          ["▤","Books","#ff9b17","#ffffff"],
+          ["▦","Calculator","#333333","#ffffff"],
+          ["◉","Contacts","#e8e8e8","#555555"],
+          ["▣","FaceTime","#28c94d","#ffffff"],
+          ["◎","Camera","#777777","#ffffff"],
+          ["▤","Notes","#fff5c5","#333333"],
+          ["⚙","Settings","#8b8b8b","#ffffff"],
+          ["✿","Photos","#ffffff","#e55c96"],
+          ["▣","Files","#3478df","#ffffff"]
+        ].map(app => `
+          <div>
+            <div style="
+              width:100%;
+              aspect-ratio:1;
+              max-width:58px;
+              margin:auto;
+              border-radius:14px;
+              background:${app[2]};
+              color:${app[3]};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-size:29px;
+              font-weight:600;
+            ">${app[0]}</div>
+            <div style="font-size:10px;margin-top:5px;">${app[1]}</div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div style="flex:1;"></div>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:14px;
+        padding:13px;
+        border-radius:25px;
+        background:rgba(255,255,255,.2);
+        backdrop-filter:blur(18px);
+        text-align:center;
+      ">
+        ${[
+          ["☎","#25c94e"],
+          ["✉","#168bff"],
+          ["●","#28c94d"],
+          ["LINE","#06c755"]
+        ].map(app => `
+          <div style="
+            aspect-ratio:1;
+            border-radius:14px;
+            background:${app[1]};
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:${app[0]==="LINE"?"13px":"27px"};
+            font-weight:700;
+          ">${app[0]}</div>
+        `).join("")}
+      </div>
+
+      <div style="
+        width:35%;
+        height:5px;
+        border-radius:10px;
+        background:white;
+        margin:20px auto 0;
+      "></div>
+    </div>
+  `;
+}
 </script>
 </body>
 </html>
