@@ -1006,28 +1006,29 @@ function showHomeScreen() {
   if (!phone) return;
 
   
+
 const apps = [
-  ["Photos", "photos", "https://img.icons8.com/fluency/144/flower.png"],
-  ["Mail", "mail", "https://img.icons8.com/fluency/144/new-post.png"],
-  ["Weather", "weather", "https://img.icons8.com/fluency/144/partly-cloudy-day.png"],
-  ["Calendar", "calendar", "https://img.icons8.com/fluency/144/calendar.png"],
-  ["Notes", "notes", "https://img.icons8.com/fluency/144/note.png"],
-  ["Maps", "maps", "https://img.icons8.com/fluency/144/google-maps-new.png"],
-  ["X", "x", "https://img.icons8.com/ios-filled/144/ffffff/twitterx.png"],
+  ["Photos", "photos", "https://img.icons8.com/color/144/ios-photos.png"],
+  ["Mail", "mail", "https://img.icons8.com/fluency/144/apple-mail.png"],
+  ["Weather", "weather", "https://img.icons8.com/color/144/partly-cloudy-day.png"],
+  ["Calendar", "calendar", "https://img.icons8.com/color/144/calendar--v1.png"],
+  ["Notes", "notes", "https://img.icons8.com/color/144/notes.png"],
+  ["Maps", "maps", "https://img.icons8.com/color/144/google-maps-new.png"],
+  ["X", "x", "https://cdn.simpleicons.org/x/white"],
   ["Settings", "settings", "https://img.icons8.com/fluency/144/settings.png"],
   ["Camera", "camera", "https://img.icons8.com/fluency/144/camera.png"],
-  ["Clock", "clock", "https://img.icons8.com/fluency/144/clock.png"],
-  ["Journal", "journal", "https://img.icons8.com/fluency/144/journal.png"],
+  ["Clock", "clock", "https://img.icons8.com/color/144/clock--v1.png"],
+  ["Journal", "journal", "https://img.icons8.com/color/144/journal.png"],
   ["Instagram", "instagram", "https://img.icons8.com/fluency/144/instagram-new.png"]
 ];
 
+const dock = [
+  ["Phone", "https://img.icons8.com/fluency/144/phone.png"],
+  ["Safari", "https://img.icons8.com/color/144/safari--v1.png"],
+  ["Messages", "https://img.icons8.com/fluency/144/speech-bubble.png"],
+  ["LINE", "https://img.icons8.com/color/144/line-me.png"]
+];
 
-  const dock = [
-    ["Phone", "https://img.icons8.com/fluency/144/phone.png"],
-    ["Safari", "https://img.icons8.com/fluency/144/safari.png"],
-    ["Messages", "https://img.icons8.com/fluency/144/speech-bubble.png"],
-    ["LINE", "https://img.icons8.com/color/144/line-me.png"]
-  ];
 
   const style = document.createElement("style");
   style.id = "ios-home-style";
