@@ -1373,9 +1373,10 @@ function handleLineTap(event) {
 
     requestAnimationFrame(followNotifications);
 
-  } else {
-    unlock();
-  }
+ } else {
+  stack.classList.remove("expanded");
+  updateNotificationPosition();
+}
 }
 
 
@@ -1400,11 +1401,11 @@ function updateNotificationPosition() {
   notifications.style.left = "5%";
   notifications.style.width = "90%";
   notifications.style.margin = "0";
-  notifications.style.maxHeight = "none";
+  notifications.style.maxHeight = Math.max(0, available - 12) + "px";
 
   
-  notifications.style.overflowY = "visible";
-
+  notifications.style.overflowY = "auto";
+  notifications.style.scrollbarWidth = "none";
   notifications.style.transition = "none";
 
 }
