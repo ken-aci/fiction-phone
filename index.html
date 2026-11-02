@@ -1000,113 +1000,293 @@ phoneScreen.addEventListener("touchend", function(e) {
   };
   return icons[name] || "";
 }
+
 function showHomeScreen() {
   const phone = document.querySelector(".phone");
+  if (!phone) return;
 
-  phone.innerHTML = `
-    <div class="ken-home" style="
+  const apps = [
+    ["Photos", "photos", "https://img.icons8.com/fluency/144/flower.png"],
+    ["Mail", "mail", "https://img.icons8.com/fluency/144/new-post.png"],
+    ["Weather", "weather", "https://img.icons8.com/fluency/144/partly-cloudy-day.png"],
+    ["Calendar", "calendar", "https://img.icons8.com/fluency/144/calendar.png"],
+    ["Notes", "notes", "https://img.icons8.com/fluency/144/notes.png"],
+    ["Maps", "maps", "https://img.icons8.com/fluency/144/google-maps-new.png"],
+    ["X", "x", "https://img.icons8.com/ios-filled/144/ffffff/twitterx.png"],
+    ["Settings", "settings", "https://img.icons8.com/fluency/144/settings.png"],
+    ["Camera", "camera", "https://img.icons8.com/fluency/144/camera.png"],
+    ["Clock", "clock", "https://img.icons8.com/fluency/144/clock.png"],
+    ["Journal", "journal", "https://img.icons8.com/fluency/144/journal.png"],
+    ["Instagram", "instagram", "https://img.icons8.com/fluency/144/instagram-new.png"]
+  ];
+
+  const dock = [
+    ["Phone", "https://img.icons8.com/fluency/144/phone.png"],
+    ["Safari", "https://img.icons8.com/fluency/144/safari.png"],
+    ["Messages", "https://img.icons8.com/fluency/144/speech-bubble.png"],
+    ["LINE", "https://img.icons8.com/color/144/line-me.png"]
+  ];
+
+  const style = document.createElement("style");
+  style.id = "ios-home-style";
+  document.getElementById(style.id)?.remove();
+
+  style.textContent = `
+    .ios-home {
       position:absolute;
       inset:0;
       z-index:30;
-      background:#03040d url('IMG_6946.jpeg') center/cover no-repeat;
+      overflow:hidden;
       color:white;
       font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-      padding:85px 22px 28px;
-      box-sizing:border-box;
+      background:linear-gradient(#00142b22,#000b1b44),
+        url('IMG_6946.jpeg') center/cover;
+    }
+    .ios-home * {box-sizing:border-box}
+    .ios-island {
+      position:absolute;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      width:34%;
+      height:28px;
+      border-radius:30px;
+      background:#000;
+      z-index:2;
+    }
+    .ios-status {
+      position:absolute;
+      top:18px;
+      left:8%;
+      right:7%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:14px;
+      font-weight:650;
+      z-index:3;
+    }
+    .ios-widgets {
+      position:absolute;
+      top:9%;
+      left:6%;
+      right:6%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .ios-widget {
+      aspect-ratio:1;
+      border-radius:23%;
+      border:1px solid #ffffff65;
+      padding:13px;
       display:flex;
       flex-direction:column;
-    ">
+      justify-content:space-between;
+      overflow:hidden;
+      box-shadow:0 3px 14px #0003;
+    }
+    .ios-calendar {
+      background:rgba(25,25,28,.85);
+    }
+    .ios-weather {
+      background:linear-gradient(145deg,#628db8,#234878);
+    }
+    .ios-weekday {
+      color:#ff514c;
+      font-size:12px;
+      font-weight:700;
+    }
+    .ios-date {
+      font-size:clamp(38px,12vw,65px);
+      font-weight:300;
+      line-height:1.05;
+    }
+    .ios-weather-temp {
+      font-size:clamp(30px,10vw,50px);
+      font-weight:300;
+    }
+    .ios-app-grid {
+      position:absolute;
+      top:36%;
+      left:6%;
+      right:6%;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      column-gap:9px;
+      row-gap:20px;
+    }
+    .ios-app {
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:5px;
+      cursor:pointer;
+    }
+    .ios-icon {
+      width:min(100%,60px);
+      aspect-ratio:1;
+      border-radius:23%;
+      background:linear-gradient(#ffffff,#e8e8e8);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      box-shadow:0 2px 8px #0004;
+    }
+    .ios-icon img {
+      width:78%;
+      height:78%;
+      object-fit:contain;
+    }
+    .ios-app[data-app="x"] .ios-icon {
+      background:#080808;
+    }
+    .ios-app-name {
+      font-size:clamp(9px,2.6vw,12px);
+      text-shadow:0 1px 4px #000;
+      white-space:nowrap;
+    }
+    .ios-bottom {
+      position:absolute;
+      bottom:5%;
+      left:5%;
+      right:5%;
+    }
+    .ios-search {
+      width:max-content;
+      margin:0 auto 16px;
+      background:#303747b9;
+      border:1px solid #ffffff55;
+      border-radius:25px;
+      padding:6px 17px;
+      font-size:12px;
+      backdrop-filter:blur(15px);
+      -webkit-backdrop-filter:blur(15px);
+    }
+    .ios-dock {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      align-items:center;
+      gap:9px;
+      padding:12px;
+      background:#6b718080;
+      border:1px solid #ffffff55;
+      border-radius:29px;
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+    }
+    .ios-dock-icon {
+      aspect-ratio:1;
+      border-radius:23%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#fff;
+      overflow:hidden;
+      cursor:pointer;
+    }
+    .ios-dock-icon img {
+      width:82%;
+      height:82%;
+      object-fit:contain;
+    }
+    .ios-home-indicator {
+      width:35%;
+      height:5px;
+      background:white;
+      border-radius:20px;
+      margin:18px auto 0;
+    }
+    @media(max-height:600px) {
+      .ios-app-grid {row-gap:9px;top:35%}
+      .ios-widgets {top:8%}
+      .ios-bottom {bottom:3%}
+    }
+  `;
+  document.head.appendChild(style);
 
-      <div style="
-        background:rgba(255,255,255,0.14);
-        backdrop-filter:blur(18px);
-        border-radius:22px;
-        padding:18px;
-        margin-bottom:30px;
-        font-size:14px;
-      ">
-        <div style="font-size:12px;opacity:.7;">CALENDAR</div>
-        <div style="font-size:23px;font-weight:600;margin:8px 0;">No Events Today</div>
-        <div style="opacity:.75;">Nothing scheduled</div>
+  const now = new Date();
+  const weekday = now.toLocaleDateString("en-US", {
+    weekday:"long"
+  });
+  const day = now.getDate();
+
+  phone.innerHTML = `
+    <div class="ios-home">
+      <div class="ios-island"></div>
+
+      <div class="ios-status">
+        <span id="ios-time">9:41</span>
+        <span>▂▄▆ █  ◉  ▰</span>
       </div>
 
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,minmax(0,1fr));
-        gap:22px 12px;
-        text-align:center;
-      ">
-        ${[
-    ["31", "Calendar", "#ffffff", "#111111", "https://img.icons8.com/fluency/96/calendar.png"],
-["◷", "Clock", "#202020", "#ffffff", "https://img.icons8.com/fluency/96/clock.png"],
-["✿", "Photos", "#ffffff", "#111111", "https://img.icons8.com/fluency/96/google-photos.png"],
-["◎", "Camera", "#aaaaaa", "#ffffff", "https://img.icons8.com/fluency/96/camera.png"],
-["▤", "Notes", "#fff5c5", "#333333", "https://img.icons8.com/fluency/96/notes.png"],
-["▣", "Files", "#ffffff", "#168bff", "https://img.icons8.com/fluency/96/folder-invoices.png"],
-["◉", "Safari", "#ffffff", "#168bff", "https://img.icons8.com/fluency/96/safari.png"],
-["⚙", "Settings", "#aaaaaa", "#ffffff", "https://img.icons8.com/fluency/96/settings.png"]
-        ].map(app => `
+      <div class="ios-widgets">
+        <div class="ios-widget ios-calendar">
           <div>
-            <div style="
-              width:100%;
-              aspect-ratio:1;
-              max-width:58px;
-              margin:auto;
-              border-radius:14px;
-              background:${app[2]};
-              color:${app[3]};
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              font-size:29px;
-              font-weight:600;
-            ">${app[4] ? `<img src="${app[4]}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">` : app[0]}</div>
-            <div style="font-size:10px;margin-top:5px;">${app[1]}</div>
+            <div class="ios-weekday">${weekday}</div>
+            <div class="ios-date">${day}</div>
+          </div>
+        </div>
+        <div class="ios-widget ios-weather">
+          <div style="text-align:right;font-size:22px">☁</div>
+          <div>
+            <div style="font-size:13px">Weather ↗</div>
+            <div class="ios-weather-temp">—°</div>
+          </div>
+          <div style="font-size:11px">
+            No forecast added
+          </div>
+        </div>
+      </div>
+
+      <div class="ios-app-grid">
+        ${apps.map(([name,id,url]) => `
+          <div class="ios-app" data-app="${id}">
+            <div class="ios-icon">
+              <img src="${url}" alt="${name}">
+            </div>
+            <div class="ios-app-name">${name}</div>
           </div>
         `).join("")}
       </div>
 
-      <div style="flex:1;"></div>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:14px;
-        padding:13px;
-        border-radius:25px;
-        background:rgba(255,255,255,.2);
-        backdrop-filter:blur(18px);
-        text-align:center;
-      ">
-        ${[
-          ["☎","#25c94e"],
-          ["✉","#168bff"],
-          ["●","#28c94d"],
-          ["LINE","#06c755"]
-        ].map(app => `
-          <div style="
-            aspect-ratio:1;
-            border-radius:14px;
-            background:${app[1]};
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:${app[0]==="LINE"?"13px":"27px"};
-            font-weight:700;
-          ">${app[0]}</div>
-        `).join("")}
+      <div class="ios-bottom">
+        <div class="ios-search">⌕ &nbsp; Search</div>
+        <div class="ios-dock">
+          ${dock.map(([name,url]) => `
+            <div class="ios-dock-icon" data-dock="${name}">
+              <img src="${url}" alt="${name}">
+            </div>
+          `).join("")}
+        </div>
+        <div class="ios-home-indicator"></div>
       </div>
-
-      <div style="
-        width:35%;
-        height:5px;
-        border-radius:10px;
-        background:white;
-        margin:20px auto 0;
-      "></div>
     </div>
   `;
+
+  const updateTime = () => {
+    const el = document.getElementById("ios-time");
+    if (el) {
+      el.textContent = new Date().toLocaleTimeString("en-US", {
+        hour:"2-digit",
+        minute:"2-digit",
+        hour12:false
+      });
+    }
+  };
+  updateTime();
+
+  phone.querySelectorAll(".ios-app,.ios-dock-icon")
+    .forEach(el => {
+      el.addEventListener("click", () => {
+        const name = el.dataset.app || el.dataset.dock;
+        alert(name + " — Coming soon");
+      });
+    });
 }
+
 </script>
 </body>
 </html>
