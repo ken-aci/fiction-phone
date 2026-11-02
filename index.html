@@ -1363,17 +1363,15 @@ function handleLineTap(event) {
   // ครั้งแรก LINE ทั้งสามข้อความสไลด์ลง
   stack.classList.add("expanded");
 
-  const start = performance.now();
+ 
+requestAnimationFrame(() => {
+  updateNotificationPosition();
+});
 
-  function animateNotifications() {
-    updateNotificationPosition();
+setTimeout(() => {
+  updateNotificationPosition();
+}, 400);
 
-    if (performance.now() - start < 700) {
-      requestAnimationFrame(animateNotifications);
-    }
-  }
-
-  requestAnimationFrame(animateNotifications);
 }
 
 /* ===== Keep All Notifications Visible ===== */
