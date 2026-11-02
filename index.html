@@ -595,45 +595,79 @@ html, body {
 
 }
 
-/* ===== iOS Lock Screen Refinement ===== */
 
-/* นาฬิกาและวันที่ */
+/* ===== NEW iOS LOCK SCREEN DESIGN ===== */
+/* เปลี่ยนเฉพาะหน้าจอล็อก ไม่แตะหน้าใส่รหัส */
+
+/* วอลเปเปอร์มีมิติและอ่านตัวอักษรง่ายขึ้น */
+.shade {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(12, 19, 33, .48) 0%,
+      rgba(12, 19, 33, .15) 32%,
+      rgba(12, 19, 33, .04) 55%,
+      rgba(8, 13, 25, .40) 100%
+    );
+}
+
+/* วันที่และนาฬิกา */
 .clock {
-  top: 14%;
+  top: 13%;
+  left: 0;
+  width: 100%;
+  padding: 0 8px;
+  z-index: 3;
 }
 
 .clock .date {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.4px;
-  text-shadow: 0 2px 8px rgba(0,0,0,.2);
+  letter-spacing: -.4px;
+  line-height: 1.3;
+  text-shadow: 0 2px 12px rgba(0,0,0,.25);
 }
 
 .clock .time {
+  font-size: clamp(70px, 23vw, 91px);
   font-weight: 750;
-  letter-spacing: -4px;
-  line-height: 1.15;
-  text-shadow: 0 4px 12px rgba(0,0,0,.22);
+  letter-spacing: -5px;
+  line-height: 1.08;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 4px 18px rgba(0,0,0,.22);
 }
 
-/* กล่อง LINE แบบกระจก iOS */
-.line-card {
-  min-height: 64px;
-  padding: 11px 13px;
-  gap: 11px;
-  border-radius: 21px;
-  background: rgba(190,195,205,.38);
-  backdrop-filter: blur(30px) saturate(1.45);
-  -webkit-backdrop-filter: blur(30px) saturate(1.45);
-  border: 1px solid rgba(255,255,255,.28);
+/* การแจ้งเตือน LINE อยู่ช่วงครึ่งล่าง */
+.line-stack {
+  top: 43%;
+  left: 5%;
+  width: 90%;
+  z-index: 15;
+}
+
+/* กระจกฝ้าสไตล์ iOS */
+.line-card,
+.ken-notification {
+  background: rgba(190, 198, 207, .53);
+  -webkit-backdrop-filter: blur(32px) saturate(1.5);
+  backdrop-filter: blur(32px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,.30);
   box-shadow:
-    0 6px 18px rgba(0,0,0,.16),
-    inset 0 1px 0 rgba(255,255,255,.18);
+    0 5px 20px rgba(0,0,0,.14),
+    inset 0 1px 0 rgba(255,255,255,.20);
+  color: #fff;
 }
 
-/* การซ้อนแจ้งเตือน */
+/* การแจ้งเตือน LINE */
+.line-card {
+  min-height: 70px;
+  padding: 11px 13px;
+  border-radius: 22px;
+  gap: 11px;
+}
+
 .line-card + .line-card {
-  margin-top: -48px;
+  margin-top: -55px;
 }
 
 .line-card:nth-child(2) {
@@ -644,20 +678,35 @@ html, body {
   transform: scale(.94);
 }
 
+/* กดเพื่อขยาย LINE เหมือนเดิม */
 .line-stack.expanded .line-card {
   margin-top: 8px;
   transform: scale(1);
 }
 
-/* รูปโปรไฟล์และข้อความ */
 .line-avatar {
-  width: 43px;
-  height: 43px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
 }
 
 .line-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 6px;
   font-size: 13px;
   font-weight: 650;
+}
+
+.line-time {
+  position: absolute;
+  right: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255,255,255,.78);
+  white-space: nowrap;
 }
 
 .line-message {
@@ -666,116 +715,91 @@ html, body {
   line-height: 1.4;
 }
 
-.line-time {
-  font-size: 10px;
-  color: rgba(255,255,255,.78);
-}
-
-/* แจ้งเตือนปฏิทินและโทรศัพท์ */
+/* ปฏิทินและสายที่ไม่ได้รับ */
 .ken-notifications {
+  left: 5%;
+  width: 90%;
   gap: 8px;
+  z-index: 5;
 }
 
 .ken-notification {
-  min-height: 55px;
-  padding: 9px 12px;
+  min-height: 61px;
+  padding: 10px 12px;
   gap: 11px;
-  border-radius: 19px;
-  background: rgba(190,195,205,.38);
-  backdrop-filter: blur(28px) saturate(1.4);
-  -webkit-backdrop-filter: blur(28px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,.25);
-  box-shadow:
-    0 5px 16px rgba(0,0,0,.13),
-    inset 0 1px 0 rgba(255,255,255,.16);
+  border-radius: 20px;
+  margin: 0;
 }
 
 .ken-app-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
 }
 
 .ken-notification-text {
-  gap: 3px;
+  gap: 4px;
   font-size: 12px;
   line-height: 1.35;
 }
 
 .ken-notification-text strong {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 650;
 }
 
+/* ไอคอนปฏิทิน */
+.ken-app-icon.calendar-icon {
+  background: #fff;
+  color: #111;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+}
+
+.ken-app-icon.calendar-icon .calendar-day {
+  color: #ef3c42;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 12px;
+  margin: 0;
+}
+
+.ken-app-icon.calendar-icon .calendar-date {
+  color: #111;
+  font-size: 21px;
+  font-weight: 650;
+  line-height: 23px;
+  margin: 0;
+  transform: none;
+}
+
+/* ไอคอนสายที่ไม่ได้รับ */
+.ken-app-icon.missed-icon {
+  background: #f0444b;
+  color: white;
+  border-radius: 9px;
+}
+
 /* ปุ่มไฟฉายและกล้อง */
+.lock-actions {
+  bottom: 53px;
+  padding: 0 27px;
+}
+
 .lock-action {
-  width: 53px;
-  height: 53px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: rgba(35,35,38,.42);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+  background: rgba(32, 36, 43, .58);
   border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 3px 12px rgba(0,0,0,.12);
-}
-
-/* ข้อความปลดล็อกยังอยู่ */
-.bottom {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -.2px;
-  text-shadow: 0 2px 7px rgba(0,0,0,.35);
-}
-
-.homebar {
-  width: 125px;
-  height: 5px;
-  margin-top: 20px;
-}
-
-/* ===== iOS Lock Screen — Home Style Match ===== */
-
-.clock .date {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -.35px;
-}
-
-.clock .time {
-  font-size: 82px;
-  font-weight: 750;
-  letter-spacing: -4px;
-  line-height: 1.15;
-  text-shadow: 0 3px 12px rgba(0,0,0,.2);
-}
-
-/* iOS frosted glass notifications */
-.line-card,
-.ken-notification {
-  background: rgba(190, 197, 211, .30);
-  border: 1px solid rgba(255,255,255,.20);
-  backdrop-filter: blur(26px) saturate(1.35);
-  -webkit-backdrop-filter: blur(26px) saturate(1.35);
-  box-shadow:
-    0 5px 16px rgba(0,0,0,.13),
-    inset 0 1px 0 rgba(255,255,255,.12);
-}
-
-.line-card {
-  border-radius: 20px;
-}
-
-.ken-notification {
-  border-radius: 18px;
-}
-
-/* iOS action buttons */
-.lock-action {
-  background: rgba(30,33,40,.40);
-  border: 1px solid rgba(255,255,255,.16);
-  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 3px 10px rgba(0,0,0,.15);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 3px 14px rgba(0,0,0,.20);
 }
 
 .lock-action svg {
@@ -783,12 +807,50 @@ html, body {
   height: 24px;
 }
 
-/* Unlock text */
+/* ข้อความและแถบปลดล็อก */
 .bottom {
+  bottom: 25px;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -.2px;
-  text-shadow: 0 2px 8px rgba(0,0,0,.3);
+  text-shadow: 0 2px 9px rgba(0,0,0,.4);
+  pointer-events: auto;
+}
+
+.homebar {
+  width: 125px;
+  height: 5px;
+  border-radius: 10px;
+  margin: 19px auto 0;
+  background: white;
+}
+
+/* หน้าจอขนาดเล็ก */
+@media (max-height: 650px) {
+  .clock {
+    top: 11%;
+  }
+
+  .clock .time {
+    font-size: 72px;
+  }
+
+  .line-stack {
+    top: 39%;
+  }
+
+  .line-card {
+    min-height: 61px;
+  }
+
+  .line-card + .line-card {
+    margin-top: -48px;
+  }
+
+  .ken-notification {
+    min-height: 53px;
+    padding: 7px 10px;
+  }
 }
 
 /* ===== iOS Passcode Screen ===== */
