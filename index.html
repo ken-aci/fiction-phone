@@ -913,14 +913,6 @@ html, body {
   border-radius: 17px !important;
 }
 
-/* เมื่อขยาย LINE ซ่อนกล่องด้านล่างชั่วคราว
-   เพื่อไม่ให้แจ้งเตือนทับกัน */
-.phone:has(.line-stack.expanded) .ken-notifications {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
 /* ย้ายปุ่มไฟฉายและกล้องลงด้านล่าง */
 .lock-actions {
   bottom: 49px !important;
@@ -1353,61 +1345,121 @@ if (notifications) notifications.style.display = "none";
   
 
 
+
+/* ===== LINE Notification Interaction ===== */
+
 function handleLineTap(event) {
   event.stopPropagation();
 
   const stack = document.getElementById("lineStack");
+  if (!stack) return;
 
-  if (!stack.classList.contains("expanded")) {
-    stack.classList.add("expanded");
+  // ครั้งที่สองเข้าสู่หน้าใส่รหัสเดิม
+  if (stack.classList.contains("expanded")) {
+    unlock();
+    return;
+  }
 
-    const start = performance.now();
+  // ครั้งแรก LINE ทั้งสามข้อความสไลด์ลง
+  stack.classList.add("expanded");
 
-    function followNotifications() {
-      updateNotificationPosition();
+  const start = performance.now();
 
-      if (performance.now() - start < 700) {
-        requestAnimationFrame(followNotifications);
-      }
+  function animateNotifications() {
+    updateNotificationPosition();
+
+    if (performance.now() - start < 700) {
+      requestAnimationFrame(animateNotifications);
     }
+  }
 
-    requestAnimationFrame(followNotifications);
-
- } else {
-  stack.classList.remove("expanded");
-  updateNotificationPosition();
-}
+  requestAnimationFrame(animateNotifications);
 }
 
-
+/* ===== Keep All Notifications Visible ===== */
 
 function updateNotificationPosition() {
   const stack = document.getElementById("lineStack");
-  const notifications = document.getElementById("kenNotifications");
+  const notifications =
+    document.getElementById("kenNotifications");
   const phone = document.querySelector(".phone");
   const actions = document.querySelector(".lock-actions");
 
-  if (!stack || !notifications || !phone || !actions) return;
+  if (!stack || !notifications || !phone || !actions) {
+    return;
+  }
+
+  const expanded = stack.classList.contains("expanded");
+
+  // ขยับ LINE ขึ้นเล็กน้อยเฉพาะตอนขยาย
+  // เพื่อให้มีพื้นที่สำหรับปฏิทินและโทรศัพท์
+  stack.style.setProperty(
+    "top",
+    expanded ? "30%" : "37%",
+    "important"
+  );
 
   const phoneRect = phone.getBoundingClientRect();
   const stackRect = stack.getBoundingClientRect();
   const actionsRect = actions.getBoundingClientRect();
 
   const top = stackRect.bottom - phoneRect.top + 10;
-  const available = actionsRect.top - stackRect.bottom - 24;
+  const bottom = actionsRect.top - phoneRect.top - 10;
+  const available = Math.max(0, bottom - top);
 
-  notifications.style.position = "absolute";
-  notifications.style.top = top + "px";
-  notifications.style.left = "5%";
-  notifications.style.width = "90%";
-  notifications.style.margin = "0";
-  notifications.style.maxHeight = Math.max(0, available - 12) + "px";
+  // ให้แจ้งเตือนอยู่ต่อจาก LINE เสมอ
+  notifications.style.setProperty(
+    "position", "absolute", "important"
+  );
+  notifications.style.setProperty(
+    "top", top + "px", "important"
+  );
+  notifications.style.setProperty(
+    "left", "5%", "important"
+  );
+  notifications.style.setProperty(
+    "width", "90%", "important"
+  );
+  notifications.style.setProperty(
+    "margin", "0", "important"
+  );
 
-  
-  notifications.style.overflowY = "auto";
-  notifications.style.scrollbarWidth = "none";
-  notifications.style.transition = "none";
+  // ห้ามซ่อนปฏิทินและโทรศัพท์
+  notifications.style.setProperty(
+    "display", "flex", "important"
+  );
+  notifications.style.setProperty(
+    "flex-direction", "column", "important"
+  );
+  notifications.style.setProperty(
+    "opacity", "1", "important"
+  );
+  notifications.style.setProperty(
+    "visibility", "visible", "important"
+  );
+  notifications.style.setProperty(
+    "pointer-events", "auto", "important"
+  );
 
+  // พื้นที่ไม่พอให้เลื่อนดูได้
+  notifications.style.setProperty(
+    "max-height", available + "px", "important"
+  );
+  notifications.style.setProperty(
+    "overflow-y", "auto", "important"
+  );
+  notifications.style.setProperty(
+    "overflow-x", "hidden", "important"
+  );
+  notifications.style.setProperty(
+    "-webkit-overflow-scrolling", "touch"
+  );
+  notifications.style.setProperty(
+    "scrollbar-width", "none"
+  );
+  notifications.style.setProperty(
+    "transition", "none", "important"
+  );
 }
 
 window.addEventListener("load", () => {
