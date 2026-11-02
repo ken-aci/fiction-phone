@@ -679,10 +679,16 @@ html, body {
 }
 
 /* กดเพื่อขยาย LINE เหมือนเดิม */
+
 .line-stack.expanded .line-card {
-  margin-top: 8px;
-  transform: scale(1);
+  margin-top: 0 !important;
+  transform: scale(1) !important;
 }
+
+.line-stack.expanded .line-card + .line-card {
+  margin-top: 8px !important;
+}
+
 
 .line-avatar {
   width: 44px;
