@@ -1387,14 +1387,44 @@ style.textContent += `
       </div>
 
       <div class="ios-app-grid">
-        ${apps.map(([name,id,url]) => `
-          <div class="ios-app" data-app="${id}">
-            <div class="ios-icon">
-              <img src="${url}" alt="${name}">
-            </div>
-            <div class="ios-app-name">${name}</div>
-          </div>
-        `).join("")}
+        
+${apps.map(([name,id,url]) => `
+  <div class="ios-app" data-app="${id}">
+    <div class="ios-icon">
+      ${id === "calendar" ? `
+        <div style="
+          width:100%;
+          height:100%;
+          background:#fff;
+          border-radius:23%;
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:center;
+          overflow:hidden;
+          box-sizing:border-box;
+        ">
+          <div style="
+            color:#ff3b30;
+            font-size:12px;
+            font-weight:600;
+            line-height:1.2;
+          ">${new Date().toLocaleDateString("en-US",{weekday:"short"})}</div>
+          <div style="
+            color:#111;
+            font-size:43px;
+            font-weight:300;
+            line-height:1.1;
+          ">${new Date().getDate()}</div>
+        </div>
+      ` : `
+        <img src="${url}" alt="${name}">
+      `}
+    </div>
+    <div class="ios-app-name">${name}</div>
+  </div>
+`).join("")}
+
       </div>
 
       <div class="ios-bottom">
