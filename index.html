@@ -853,6 +853,107 @@ html, body {
   }
 }
 
+/* ===== LOCK SCREEN LAYOUT FIX ===== */
+
+/* แยกนาฬิกากับแจ้งเตือนให้ชัดเจน */
+.clock {
+  top: 11% !important;
+}
+
+.clock .time {
+  font-size: 82px !important;
+  font-weight: 750 !important;
+  line-height: 1.08 !important;
+}
+
+/* กลุ่ม LINE กลับมาซ้อนกัน */
+.line-stack {
+  top: 37% !important;
+  left: 5% !important;
+  width: 90% !important;
+}
+
+.line-card {
+  min-height: 62px !important;
+  padding: 9px 12px !important;
+  border-radius: 19px !important;
+}
+
+.line-card + .line-card {
+  margin-top: -46px !important;
+}
+
+.line-card:nth-child(2) {
+  transform: scale(.97);
+}
+
+.line-card:nth-child(3) {
+  transform: scale(.94);
+}
+
+/* กดแล้ว LINE ขยายออกเป็นสามกล่อง */
+.line-stack.expanded .line-card {
+  margin-top: 8px !important;
+  transform: scale(1) !important;
+}
+
+/* แจ้งเตือนปฏิทินและโทรศัพท์อยู่ด้านล่าง */
+.ken-notifications {
+  top: 57% !important;
+  left: 5% !important;
+  width: 90% !important;
+  gap: 7px !important;
+  max-height: 25% !important;
+  overflow: hidden !important;
+}
+
+.ken-notification {
+  min-height: 54px !important;
+  padding: 7px 11px !important;
+  border-radius: 17px !important;
+}
+
+/* เมื่อขยาย LINE ซ่อนกล่องด้านล่างชั่วคราว
+   เพื่อไม่ให้แจ้งเตือนทับกัน */
+.phone:has(.line-stack.expanded) .ken-notifications {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ย้ายปุ่มไฟฉายและกล้องลงด้านล่าง */
+.lock-actions {
+  bottom: 49px !important;
+  z-index: 18 !important;
+}
+
+.lock-action {
+  width: 48px !important;
+  height: 48px !important;
+  background: rgba(30,34,42,.60) !important;
+}
+
+/* ข้อความปลดล็อก */
+.bottom {
+  bottom: 17px !important;
+  z-index: 19 !important;
+}
+
+.bottom .homebar {
+  margin-top: 12px !important;
+}
+
+/* ปรับสำหรับจอจำลองที่เตี้ย */
+@media (max-height: 650px) {
+  .line-stack {
+    top: 35% !important;
+  }
+
+  .ken-notifications {
+    top: 55% !important;
+  }
+}
+
 /* ===== iOS Passcode Screen ===== */
 
 /* พื้นหลังเบลอ ใช้วอลเปเปอร์เดิม */
