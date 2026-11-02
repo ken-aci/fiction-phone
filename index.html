@@ -1305,16 +1305,26 @@ style.textContent += `
 }
 `;
 
+
 style.textContent += `
+  .ios-app[data-app="instagram"] .ios-icon,
+  .ios-app[data-app="line"] .ios-icon {
+    width: 68px !important;
+    height: 68px !important;
+    overflow: visible !important;
+  }
+
   .ios-app[data-app="instagram"] .ios-icon img,
   .ios-app[data-app="line"] .ios-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 23%;
-    transform: scale(1.12);
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 23% !important;
+    transform: scale(1.25) !important;
+    display: block !important;
   }
 `;
+
 
   const now = new Date();
   const weekday = now.toLocaleDateString("en-US", {
