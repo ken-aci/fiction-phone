@@ -1094,6 +1094,16 @@ const apps = [
     .ios-weather {
       background:linear-gradient(145deg,#628db8,#234878);
     }
+    
+.ios-weather {
+  padding-top:10px;
+  padding-bottom:12px;
+}
+
+.ios-weather > div:nth-child(2) {
+  margin-top:-8px;
+}
+
     .ios-weekday {
       color:#ff514c;
       font-size:12px;
@@ -1110,13 +1120,13 @@ const apps = [
     }
     .ios-app-grid {
       position:absolute;
-      top:36%;
+      top:32%;
       left:6%;
       right:6%;
       display:grid;
       grid-template-columns:repeat(4,minmax(0,1fr));
       column-gap:9px;
-      row-gap:20px;
+      row-gap:16px;
     }
     .ios-app {
       min-width:0;
