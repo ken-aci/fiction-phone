@@ -595,6 +595,144 @@ html, body {
 
 }
 
+/* ===== iOS Lock Screen Refinement ===== */
+
+/* นาฬิกาและวันที่ */
+.clock {
+  top: 14%;
+}
+
+.clock .date {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.clock .time {
+  font-weight: 750;
+  letter-spacing: -4px;
+  line-height: 1.15;
+  text-shadow: 0 4px 12px rgba(0,0,0,.22);
+}
+
+/* กล่อง LINE แบบกระจก iOS */
+.line-card {
+  min-height: 64px;
+  padding: 11px 13px;
+  gap: 11px;
+  border-radius: 21px;
+  background: rgba(190,195,205,.38);
+  backdrop-filter: blur(30px) saturate(1.45);
+  -webkit-backdrop-filter: blur(30px) saturate(1.45);
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+/* การซ้อนแจ้งเตือน */
+.line-card + .line-card {
+  margin-top: -48px;
+}
+
+.line-card:nth-child(2) {
+  transform: scale(.97);
+}
+
+.line-card:nth-child(3) {
+  transform: scale(.94);
+}
+
+.line-stack.expanded .line-card {
+  margin-top: 8px;
+  transform: scale(1);
+}
+
+/* รูปโปรไฟล์และข้อความ */
+.line-avatar {
+  width: 43px;
+  height: 43px;
+}
+
+.line-name {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.line-message {
+  font-size: 12px;
+  font-weight: 450;
+  line-height: 1.4;
+}
+
+.line-time {
+  font-size: 10px;
+  color: rgba(255,255,255,.78);
+}
+
+/* แจ้งเตือนปฏิทินและโทรศัพท์ */
+.ken-notifications {
+  gap: 8px;
+}
+
+.ken-notification {
+  min-height: 55px;
+  padding: 9px 12px;
+  gap: 11px;
+  border-radius: 19px;
+  background: rgba(190,195,205,.38);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow:
+    0 5px 16px rgba(0,0,0,.13),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.ken-app-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.ken-notification-text {
+  gap: 3px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.ken-notification-text strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+/* ปุ่มไฟฉายและกล้อง */
+.lock-action {
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  background: rgba(35,35,38,.42);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 3px 12px rgba(0,0,0,.12);
+}
+
+/* ข้อความปลดล็อกยังอยู่ */
+.bottom {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.2px;
+  text-shadow: 0 2px 7px rgba(0,0,0,.35);
+}
+
+.homebar {
+  width: 125px;
+  height: 5px;
+  margin-top: 20px;
+}
+
 </style>
 </head>
 <body>
