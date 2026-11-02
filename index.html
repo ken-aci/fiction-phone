@@ -684,8 +684,8 @@ html, body {
 
     
 <div class="ken-app-icon calendar-icon">
-  <span class="calendar-day">WED</span>
-  <span class="calendar-date">28</span>
+  <span class="calendar-day" id="notificationCalendarDay"></span>
+<span class="calendar-date" id="notificationCalendarDate"></span>
 </div>
 
     <div class="ken-notification-text">
@@ -1432,6 +1432,26 @@ style.textContent += `
     });
 }
 
+</script>
+  <script>
+function updateCalendarDate() {
+  const now = new Date();
+
+  const day = now.toLocaleDateString("en-US", {
+    weekday: "short"
+  }).toUpperCase();
+
+  const date = now.getDate();
+
+  const dayEl = document.getElementById("notificationCalendarDay");
+  const dateEl = document.getElementById("notificationCalendarDate");
+
+  if (dayEl) dayEl.textContent = day;
+  if (dateEl) dateEl.textContent = date;
+}
+
+updateCalendarDate();
+setInterval(updateCalendarDate, 60000);
 </script>
 </body>
 </html>
