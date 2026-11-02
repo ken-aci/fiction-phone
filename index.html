@@ -1015,6 +1015,7 @@ const icon = (name) =>
 const iosIcon = (name) =>
   `https://raw.githubusercontent.com/SysAdminDoc/iOSIconPack/master/app/src/main/res/drawable-xxxhdpi/ios17_${name}.png`;
 
+
 const apps = [
   ["Photos", "photos", iosIcon("photos")],
   ["Mail", "mail", iosIcon("mail")],
@@ -1028,8 +1029,10 @@ const apps = [
 
   ["Instagram", "instagram", icon("instagram-new")],
   ["LINE", "line", "https://img.icons8.com/color/144/line-me.png"],
-  ["Zoom", "zoom", "https://img.icons8.com/color/144/zoom.png"]
+  ["Zoom", "zoom", iosIcon("zoom")],
+  ["TikTok", "tiktok", iosIcon("tiktok")]
 ];
+
 
 const dock = [
   ["Phone", iosIcon("phone")],
@@ -1300,6 +1303,17 @@ style.textContent += `
   width: 68px;
   height: 68px;
 }
+`;
+
+style.textContent += `
+  .ios-app[data-app="instagram"] .ios-icon img,
+  .ios-app[data-app="line"] .ios-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 23%;
+    transform: scale(1.12);
+  }
 `;
 
   const now = new Date();
