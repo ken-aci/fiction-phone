@@ -1276,6 +1276,26 @@ style.textContent += `
   }
 `;
 
+style.textContent += `
+.ios-icon {
+  width: min(100%, 68px);
+  aspect-ratio: 1;
+}
+
+.ios-dock {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0;
+}
+
+.ios-dock-icon {
+  flex: 0 0 auto;
+  width: 68px;
+  height: 68px;
+}
+`;
+
   const now = new Date();
   const weekday = now.toLocaleDateString("en-US", {
     weekday:"long"
