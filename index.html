@@ -1011,26 +1011,32 @@ function showHomeScreen() {
 const icon = (name) =>
   `https://img.icons8.com/fluency/144/${name}.png`;
 
-const apps = [
-  ["Photos", "photos", icon("photos")],
-  ["Mail", "mail", icon("apple-mail")],
-  ["Weather", "weather", icon("partly-cloudy-day")],
-  ["Calendar", "calendar", icon("calendar")],
 
-  ["Maps", "maps", icon("google-maps")],
-  ["Settings", "settings", icon("settings")],
-  ["Camera", "camera", icon("camera")],
-  ["Clock", "clock", icon("clock")],
+const iosIcon = (name) =>
+  `https://raw.githubusercontent.com/SysAdminDoc/iOSIconPack/master/app/src/main/res/drawable-xxxhdpi/ios17_${name}.png`;
+
+const apps = [
+  ["Photos", "photos", iosIcon("photos")],
+  ["Mail", "mail", iosIcon("mail")],
+  ["Weather", "weather", iosIcon("weather")],
+  ["Calendar", "calendar", iosIcon("calendar")],
+
+  ["Maps", "maps", iosIcon("maps")],
+  ["Settings", "settings", iosIcon("settings")],
+  ["Camera", "camera", iosIcon("camera")],
+  ["Clock", "clock", iosIcon("clock")],
 
   ["Instagram", "instagram", icon("instagram-new")],
-  ["LINE", "line", "https://img.icons8.com/color/144/line-me.png"]
+  ["LINE", "line", "https://img.icons8.com/color/144/line-me.png"],
+  ["Zoom", "zoom", "https://img.icons8.com/color/144/zoom.png"]
 ];
 
 const dock = [
-  ["Phone", icon("phone")],
-  ["Safari", "https://img.icons8.com/color/144/safari--v1.png"],
-  ["Messages", "https://img.icons8.com/color/144/speech-bubble--v1.png"]
+  ["Phone", iosIcon("phone")],
+  ["Safari", iosIcon("safari")],
+  ["Messages", iosIcon("messages")]
 ];
+
 
 
 
