@@ -1007,27 +1007,31 @@ function showHomeScreen() {
 
   
 
+
+const icon = (name) =>
+  `https://img.icons8.com/fluency/144/${name}.png`;
+
 const apps = [
-  ["Photos", "photos", "https://img.icons8.com/color/144/ios-photos.png"],
-  ["Mail", "mail", "https://img.icons8.com/fluency/144/apple-mail.png"],
-  ["Weather", "weather", "https://img.icons8.com/color/144/partly-cloudy-day.png"],
-  ["Calendar", "calendar", "https://img.icons8.com/color/144/calendar--v1.png"],
-  ["Notes", "notes", "https://img.icons8.com/color/144/notes.png"],
-  ["Maps", "maps", "https://img.icons8.com/color/144/google-maps-new.png"],
-  ["X", "x", "https://cdn.simpleicons.org/x/white"],
-  ["Settings", "settings", "https://img.icons8.com/fluency/144/settings.png"],
-  ["Camera", "camera", "https://img.icons8.com/fluency/144/camera.png"],
-  ["Clock", "clock", "https://img.icons8.com/color/144/clock--v1.png"],
-  ["Journal", "journal", "https://img.icons8.com/color/144/journal.png"],
-  ["Instagram", "instagram", "https://img.icons8.com/fluency/144/instagram-new.png"]
+  ["Photos", "photos", icon("photos")],
+  ["Mail", "mail", icon("apple-mail")],
+  ["Weather", "weather", icon("partly-cloudy-day")],
+  ["Calendar", "calendar", icon("calendar")],
+
+  ["Maps", "maps", icon("google-maps")],
+  ["Settings", "settings", icon("settings")],
+  ["Camera", "camera", icon("camera")],
+  ["Clock", "clock", icon("clock")],
+
+  ["Instagram", "instagram", icon("instagram-new")],
+  ["LINE", "line", "https://img.icons8.com/color/144/line-me.png"]
 ];
 
 const dock = [
-  ["Phone", "https://img.icons8.com/fluency/144/phone.png"],
+  ["Phone", icon("phone")],
   ["Safari", "https://img.icons8.com/color/144/safari--v1.png"],
-  ["Messages", "https://img.icons8.com/fluency/144/speech-bubble.png"],
-  ["LINE", "https://img.icons8.com/color/144/line-me.png"]
+  ["Messages", "https://img.icons8.com/color/144/speech-bubble--v1.png"]
 ];
+
 
 
   const style = document.createElement("style");
@@ -1221,7 +1225,31 @@ url('IMG_7022.JPG') center/cover;
     }
   `;
   document.head.appendChild(style);
+style.textContent += `
+.ios-icon {
+  width: min(100%, 60px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 23%;
+}
 
+.ios-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.ios-dock-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+`;
 style.textContent += `
   .ios-icon {
     background:transparent;
@@ -1231,7 +1259,7 @@ style.textContent += `
   .ios-icon img {
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     border-radius:23%;
   }
   .ios-dock-icon {
@@ -1240,7 +1268,7 @@ style.textContent += `
   .ios-dock-icon img {
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     border-radius:23%;
   }
   .ios-app[data-app="x"] .ios-icon {
@@ -1324,7 +1352,7 @@ style.textContent += `
             </div>
           `).join("")}
         </div>
-        <div class="ios-home-indicator"></div>
+        
       </div>
     </div>
   `;
