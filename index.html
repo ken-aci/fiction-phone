@@ -1005,20 +1005,22 @@ function showHomeScreen() {
   const phone = document.querySelector(".phone");
   if (!phone) return;
 
-  const apps = [
-    ["Photos", "photos", "https://img.icons8.com/fluency/144/flower.png"],
-    ["Mail", "mail", "https://img.icons8.com/fluency/144/new-post.png"],
-    ["Weather", "weather", "https://img.icons8.com/fluency/144/partly-cloudy-day.png"],
-    ["Calendar", "calendar", "https://img.icons8.com/fluency/144/calendar.png"],
-    ["Notes", "notes", "https://img.icons8.com/fluency/144/notes.png"],
-    ["Maps", "maps", "https://img.icons8.com/fluency/144/google-maps-new.png"],
-    ["X", "x", "https://img.icons8.com/ios-filled/144/ffffff/twitterx.png"],
-    ["Settings", "settings", "https://img.icons8.com/fluency/144/settings.png"],
-    ["Camera", "camera", "https://img.icons8.com/fluency/144/camera.png"],
-    ["Clock", "clock", "https://img.icons8.com/fluency/144/clock.png"],
-    ["Journal", "journal", "https://img.icons8.com/fluency/144/journal.png"],
-    ["Instagram", "instagram", "https://img.icons8.com/fluency/144/instagram-new.png"]
-  ];
+  
+const apps = [
+  ["Photos", "photos", "https://img.icons8.com/fluency/144/flower.png"],
+  ["Mail", "mail", "https://img.icons8.com/fluency/144/new-post.png"],
+  ["Weather", "weather", "https://img.icons8.com/fluency/144/partly-cloudy-day.png"],
+  ["Calendar", "calendar", "https://img.icons8.com/fluency/144/calendar.png"],
+  ["Notes", "notes", "https://img.icons8.com/fluency/144/note.png"],
+  ["Maps", "maps", "https://img.icons8.com/fluency/144/google-maps-new.png"],
+  ["X", "x", "https://img.icons8.com/ios-filled/144/ffffff/twitterx.png"],
+  ["Settings", "settings", "https://img.icons8.com/fluency/144/settings.png"],
+  ["Camera", "camera", "https://img.icons8.com/fluency/144/camera.png"],
+  ["Clock", "clock", "https://img.icons8.com/fluency/144/clock.png"],
+  ["Journal", "journal", "https://img.icons8.com/fluency/144/journal.png"],
+  ["Instagram", "instagram", "https://img.icons8.com/fluency/144/instagram-new.png"]
+];
+
 
   const dock = [
     ["Phone", "https://img.icons8.com/fluency/144/phone.png"],
@@ -1207,6 +1209,32 @@ function showHomeScreen() {
   `;
   document.head.appendChild(style);
 
+style.textContent += `
+  .ios-icon {
+    background:transparent;
+    box-shadow:none;
+    border-radius:23%;
+  }
+  .ios-icon img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:23%;
+  }
+  .ios-dock-icon {
+    background:transparent;
+  }
+  .ios-dock-icon img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:23%;
+  }
+  .ios-app[data-app="x"] .ios-icon {
+    background:#080808;
+  }
+`;
+
   const now = new Date();
   const weekday = now.toLocaleDateString("en-US", {
     weekday:"long"
@@ -1219,7 +1247,22 @@ function showHomeScreen() {
 
       <div class="ios-status">
         <span id="ios-time">9:41</span>
-        <span>▂▄▆ █  ◉  ▰</span>
+        
+<span style="display:flex;align-items:center;gap:6px">
+  <svg width="19" height="15" viewBox="0 0 19 15">
+    <rect x="1" y="10" width="3" height="5" rx="1" fill="white"/>
+    <rect x="6" y="7" width="3" height="8" rx="1" fill="white"/>
+    <rect x="11" y="4" width="3" height="11" rx="1" fill="white"/>
+    <rect x="16" y="1" width="3" height="14" rx="1" fill="white"/>
+  </svg>
+  <svg width="19" height="15" viewBox="0 0 20 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+    <path d="M2 5 Q10 -1 18 5"/>
+    <path d="M5 9 Q10 5 15 9"/>
+    <path d="M8 13 Q10 11 12 13"/>
+  </svg>
+  <span style="background:white;color:black;border-radius:4px;padding:1px 4px;font-size:11px;font-weight:800">94</span>
+</span>
+
       </div>
 
       <div class="ios-widgets">
@@ -1229,16 +1272,23 @@ function showHomeScreen() {
             <div class="ios-date">${day}</div>
           </div>
         </div>
-        <div class="ios-widget ios-weather">
-          <div style="text-align:right;font-size:22px">☁</div>
-          <div>
-            <div style="font-size:13px">Weather ↗</div>
-            <div class="ios-weather-temp">—°</div>
-          </div>
-          <div style="font-size:11px">
-            No forecast added
-          </div>
-        </div>
+        
+<div class="ios-widget ios-weather">
+  <div style="text-align:right;font-size:23px">🌤️</div>
+  <div>
+    <div style="font-size:12px;font-weight:600">
+      Nakhon Sawan ↗
+    </div>
+    <div style="font-size:46px;font-weight:300;line-height:1.15">
+      29°
+    </div>
+  </div>
+  <div style="font-size:11px;line-height:1.5">
+    Partly Cloudy
+    <div style="opacity:.8">H:33° L:25°</div>
+  </div>
+</div>
+
       </div>
 
       <div class="ios-app-grid">
